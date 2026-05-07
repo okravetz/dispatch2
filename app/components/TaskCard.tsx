@@ -63,7 +63,7 @@ export default function TaskCard({ task }: TaskCardProps) {
 
             {/* Due Date */}
             <div className="flex flex-auto">
-                <p className="text-sm">Due: {new Date(task.due_date + 'T00:00:00').toLocaleDateString()}</p>
+               {task.due_date ? <p className="text-sm">Due: {new Date(task.due_date + 'T00:00:00').toLocaleDateString()}</p> : null}
             </div>
 
         </div>

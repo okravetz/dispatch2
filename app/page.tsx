@@ -1,12 +1,27 @@
 "use client";
-import { useState } from "react";
-import { task_list } from "./data/tasks";
+import { useEffect, useState } from "react";
 import TaskCard from "./components/TaskCard";
 import AddTaskModal from "./components/AddTaskModal";
+import { supabase } from "@/lib/supabase";
+import { Task } from "./data/tasks";
 
 export default function Home() {
-  const [tasks, setTasks] = useState(task_list);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const { data, error } = await supabase.from("tasks").select("*");
+      if (error) {
+        console.error("Error fetching tasks:", error);
+      } else {
+        setTasks(data as Task[]);
+        console.log("Fetched tasks:", data);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <main>
@@ -20,8 +35,17 @@ export default function Home() {
       {isModalOpen && (
         <AddTaskModal
           onClose={() => setIsModalOpen(false)}
-          onAdd={(task) => {
-            setTasks([...tasks, task]);
+          onAdd={async (task) => {
+            const { data, error } = await supabase.from("tasks").insert({
+              title: task.title,
+              status: task.status,
+              priority: task.priority
+            }).select();
+            if (error) {
+              console.error("Error adding task:", error);
+            } else {
+              setTasks([...tasks, data[0] as Task]);
+            }
           }}
         />
       )}
