@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Task } from "../data/tasks";
-import { ChevronLeft, Trash2, Calendar } from "lucide-react";
+import { ChevronLeft, Trash2, Calendar, Bell } from "lucide-react";
 
 type TaskDetailProps = {
     task: Task;
@@ -12,7 +12,7 @@ type TaskDetailProps = {
 
 export default function TaskDetailModal({ task, onDelete, onUpdate, onClose }: TaskDetailProps) {
     const [editingField, setEditingField] = useState<string | null>(null);
-
+    console.log("nudge_at:", task.nudge_at);
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center" onClick={onClose}>
             <div className="bg-gray-900 rounded w-full max-w-md" onClick={(e) => e.stopPropagation()}>
@@ -26,7 +26,7 @@ export default function TaskDetailModal({ task, onDelete, onUpdate, onClose }: T
                     {/* Title */}
                     {editingField === "title" ? (
                         <input
-                            className="w-full border-b border-gray-300 my-4 outline-none text-2xl font-light"
+                            className="w-full border-b border-gray-300 outline-none text-2xl font-light"
                             defaultValue={task.title}
                             onBlur={(e) => {
                             onUpdate(task.id, { title: e.target.value });
@@ -52,6 +52,26 @@ export default function TaskDetailModal({ task, onDelete, onUpdate, onClose }: T
                         <option value="Responded">Responded</option>
                         <option value="Done">Done</option>
                     </select>}
+
+                    {/* Nudge Panel*/}
+                    {task.status === "Waiting" && (
+                        <div className="flex flex-col p-4 bg-purple-100 text-purple-800 rounded">
+                            <p className="font-bold text-sm">Nudge me if no reply by:</p>
+                            <div className="flex flex-row justify-start items-center cursor-pointer" onClick={() => setEditingField("due_date")}>
+                                <Calendar size={24} color="#9ca3af" className="m-2 mr-4" />
+                                <input
+                                    className="py-4 w-full border-b border-transparent py-4 outline-none cursor-pointer"
+                                    type="date"
+                                    value={task.nudge_at ? task.nudge_at.split("T")[0] : ""}
+                                    onChange={(e) => {
+                                    onUpdate(task.id, { nudge_at: e.target.value || null });
+                                    setEditingField(null);
+                                    }}
+                                    autoFocus
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     {/* Priority */}
                     {<div className="flex flex-row gap-1 justify-center">
@@ -79,41 +99,28 @@ export default function TaskDetailModal({ task, onDelete, onUpdate, onClose }: T
                             </button>
                         ))}
                     </div>}
-                    {/*<select
-                        className="cursor-pointer"
-                        defaultValue={task.priority}
-                        onChange={(e) => {
-                            onUpdate(task.id, { priority: e.target.value as Task["priority"] });
-                            setEditingField(null);
-                        }}
-                    >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>*/}
 
                     {/* Due Date */}
-                    {editingField === "due_date" ? (
-                        <input
-                            className="py-4 w-full border-b border-gray-300 py-4 outline-none cursor-pointer"
-                            type="date"
-                            defaultValue={task.due_date ?? ""}
-                            onBlur={(e) => {
-                            onUpdate(task.id, { due_date: e.target.value });
-                            setEditingField(null);
-                            }}
-                            autoFocus
-                        />
-                    ) : (
                     <div className="flex-col">
                         <hr className="mb-1 w-full border-gray-600" />
                         <div className="flex flex-row justify-start items-center cursor-pointer" onClick={() => setEditingField("due_date")}>
                             <Calendar size={24} color="#9ca3af" className="m-2 mr-4" />
-                            <p className="py-4 border-b border-transparent">{task.due_date ?? "Add Due Date"}</p>
+                    {editingField === "due_date" ? (
+                        <input
+                            className="py-4 w-full border-b border-transparent py-4 outline-none cursor-pointer"
+                            type="date"
+                            value={task.due_date ? task.due_date.split("T")[0] : ""}
+                            onChange={(e) => {
+                            onUpdate(task.id, { due_date: e.target.value || null });
+                            }}
+                            autoFocus
+                        />
+                    ) : (
+                        <p className="py-4 border-b border-transparent">{task.due_date ?? "Add Due Date"}</p>
+                    )}
                         </div>
                         <hr className="mt-1 w-full border-gray-600" />
                     </div>
-                    )}
                 </div>
 
                 {/* Footer */}

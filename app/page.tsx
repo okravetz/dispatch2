@@ -66,7 +66,7 @@ export default function Home() {
           onUpdate={async (taskId, updatedFields) => {
             const { data, error } = await supabase.from("tasks").update(updatedFields).eq("id", taskId).select();
             if (error) {
-              console.error("Error updating task:", error);
+              console.error("Error updating task:", JSON.stringify(error));
             } else {
               setTasks(tasks.map((t) => (t.id === taskId ? { ...t, ...updatedFields } : t)));
               setSelectedTask((prev) => prev ? { ...prev, ...updatedFields } : null);

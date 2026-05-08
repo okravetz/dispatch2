@@ -37,10 +37,16 @@ function StatusIndicator({ status }: { status: Task["status"] }) {
 }
 
 export default function TaskCard({ task, onClick }: TaskCardProps) {
+    const isNudgeDue =
+        task.status === "Waiting" &&
+        task.nudge_at &&
+        !task.nudge_sent &&
+        new Date(task.nudge_at) < new Date();
+
     return (
         
         // Task Card
-        <div className="flex flex-col p-2 border-b rounded-lg border-gray-300 m-4 bg-gray-800 hover:bg-gray-600 cursor-pointer" onClick={onClick}>
+        <div className="flex flex-col p-4 border-b rounded-xl border-gray-600 m-4 bg-gray-800 hover:bg-gray-600 cursor-pointer" onClick={onClick}>
             
             {/* Task Header */}
             <div className="flex flex-row flex-auto pb-4">
@@ -62,11 +68,17 @@ export default function TaskCard({ task, onClick }: TaskCardProps) {
                 </div>
             </div>
 
-            {/* Due Date */}
-            <div className="flex flex-auto">
-               {task.due_date ? <p className="text-sm">Due: {new Date(task.due_date + 'T00:00:00').toLocaleDateString()}</p> : null}
-            </div>
+            {/* Footer */}
+            <div className="flex flex-auto gap-x-2 items-center">
 
+                {/* Due Date */}
+               {task.due_date ? <p className="text-sm">Due: {new Date(task.due_date + 'T00:00:00').toLocaleDateString()}</p> : null}
+
+                {/* Nudge Indicator */}
+                    {isNudgeDue && (
+                        <p className="text-sm bg-purple-100 text-purple-800 font-bold rounded-full p-1 px-2">Nudge due</p>
+                    )}
+            </div>
         </div>
     );
 }
