@@ -13,15 +13,15 @@ const [status, setStatus] = useState("Not Started");
 const [priority, setPriority] = useState("Medium");
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div className="bg-white rounded p-6 w-full max-w-md">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center" onClick={onClose}>
+      <div className="bg-gray-900 rounded p-6 w-full max-w-md">
         <h1 className="text-2xl font-bold py-4 px-2">Add Task</h1>
         {/* Add Task Form */}
         <form className="flex flex-col p-4">
-            <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="title">Title</label>
+            <label className="mb-2 font-bold text-lg text-gray-200" htmlFor="title">Title</label>
             <input className="border border-gray-300 rounded p-2" type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
             
-            <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="status">Status</label>
+            <label className="mb-2 font-bold text-lg text-gray-200 mt-6" htmlFor="status">Status</label>
             <select className="border border-gray-300 rounded p-2" id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="Not Started">Not Started</option>
                 <option value="In Progress">In Progress</option>
@@ -30,13 +30,13 @@ const [priority, setPriority] = useState("Medium");
                 <option value="Done">Done</option>
             </select>
 
-            <label className="mb-2 font-bold text-lg text-gray-900" htmlFor="priority">Priority</label>
+            <label className="mb-2 font-bold text-lg text-gray-200 mt-6" htmlFor="priority">Priority</label>
             <select className="border border-gray-300 rounded p-2" id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
             </select>
-            <button className="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => {
+            <button className="mt-8 bg-blue-500 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => {
               onAdd({
                 id: Date.now(),
                 title,
@@ -49,7 +49,7 @@ const [priority, setPriority] = useState("Medium");
             }}>
                 Add Task
             </button>
-            <button className="mt-2 bg-gray-500 text-white font-bold py-2 px-4 rounded" type="button" onClick={onClose}>
+            <button className="mt-4 bg-gray-500 text-white font-bold py-2 px-4 rounded" type="button" onClick={onClose}>
                 Cancel
             </button>
         </form>
