@@ -4,6 +4,7 @@ import { Task } from "../data/tasks";
 type TaskCardProps = {
     task: Task;
     onClick?: () => void;
+    dimmed?: boolean;
 };
 
 function PriorityIndicator({ priority }: { priority: Task["priority"] }) {
@@ -36,17 +37,19 @@ function StatusIndicator({ status }: { status: Task["status"] }) {
     }
 }
 
-export default function TaskCard({ task, onClick }: TaskCardProps) {
+export default function TaskCard({ task, onClick, dimmed }: TaskCardProps) {
     const isNudgeDue =
         task.status === "Waiting" &&
         task.nudge_at &&
         !task.nudge_sent &&
         new Date(task.nudge_at) < new Date();
 
+    const isDone = task.status === "Done";
+
     return (
         
         // Task Card
-        <div className="flex flex-col p-4 border-b rounded-xl border-gray-600 m-4 bg-gray-800 hover:bg-gray-600 cursor-pointer" onClick={onClick}>
+        <div className={`flex flex-col p-4 border-b rounded-xl border-gray-600 bg-gray-800 hover:bg-gray-600 cursor-pointer  ${isDone || dimmed ? "opacity-30" : ""}`} onClick={onClick}>
             
             {/* Task Header */}
             <div className="flex flex-row flex-auto pb-4">

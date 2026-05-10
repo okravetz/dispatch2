@@ -12,15 +12,14 @@ type TaskDetailProps = {
 
 export default function TaskDetailModal({ task, onDelete, onUpdate, onClose }: TaskDetailProps) {
     const [editingField, setEditingField] = useState<string | null>(null);
-    console.log("nudge_at:", task.nudge_at);
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center" onClick={onClose}>
             <div className="bg-gray-900 rounded w-full max-w-md" onClick={(e) => e.stopPropagation()}>
                 <div className="flex flex-col p-6 gap-y-8">
-                    {/* Title */}
-                    <button onClick={onClose} className="flex items-centercursor-pointer">
-                        <ChevronLeft size={24} className="mr-2" color="#9ca3af" />
-                        <span className="mb-4 text-gray-200">Active Tasks</span>
+                    {/* Back Button / Close */}
+                    <button onClick={onClose} className="flex items-center gap-x-2 cursor-pointer">
+                        <ChevronLeft size={24} color="#9ca3af" />
+                        <span className="text-gray-200">Active Tasks</span>
                     </button>
 
                     {/* Title */}

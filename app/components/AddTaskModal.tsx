@@ -14,7 +14,7 @@ const [priority, setPriority] = useState("Medium");
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center" onClick={onClose}>
-      <div className="bg-gray-900 rounded p-6 w-full max-w-md">
+      <div className="bg-gray-900 rounded p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
         <h1 className="text-2xl font-bold py-4 px-2">Add Task</h1>
         {/* Add Task Form */}
         <form className="flex flex-col p-4">
@@ -22,7 +22,7 @@ const [priority, setPriority] = useState("Medium");
             <input className="border border-gray-300 rounded p-2" type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
             
             <label className="mb-2 font-bold text-lg text-gray-200 mt-6" htmlFor="status">Status</label>
-            <select className="border border-gray-300 rounded p-2" id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select className="cursor-pointer bg-gray-900 text-gray-200 border border-gray-300 rounded p-2" id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="Not Started">Not Started</option>
                 <option value="In Progress">In Progress</option>
                 <option value="Responded">Responded</option>
@@ -31,7 +31,7 @@ const [priority, setPriority] = useState("Medium");
             </select>
 
             <label className="mb-2 font-bold text-lg text-gray-200 mt-6" htmlFor="priority">Priority</label>
-            <select className="border border-gray-300 rounded p-2" id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <select className="cursor-pointer bg-gray-900 text-gray-200 border border-gray-300 rounded p-2" id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
