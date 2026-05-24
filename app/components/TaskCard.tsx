@@ -1,4 +1,3 @@
-import React from "react"
 import { Task } from "../data/tasks";
 
 type TaskCardProps = {
