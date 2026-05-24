@@ -16,8 +16,8 @@ const [pasteText, setPasteText] = useState("");
 const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center" onClick={onClose}>
-      <div className="bg-gray-900 rounded p-6 w-full max-w-md min-h-[500px] flex flex-col" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black/50 flex items-start justify-center pt-20" onClick={onClose}>
+      <div className="bg-gray-900 rounded p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
         <h1 className="text-2xl font-bold py-4 px-2">Add Task</h1>
         {/* Tabs */}
         <div className="flex gap-2 border-b border-gray-700">
