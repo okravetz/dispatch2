@@ -11,7 +11,7 @@ export async function POST(request:Request) {
         const prompt = `The following is text copied and pasted from a user's notification or message.
         Parse the text into a todo task using the following schema.
         Speficy null for any field that can't be inferred.
-        The response should be in JSON only - no prose, no markdown, no backticks.
+        The response should be in JSON only - no prose, no markdown, no backticks, no code fences.
         Today's date is ${todaysDate}.
 
         ## Fields
@@ -38,7 +38,13 @@ export async function POST(request:Request) {
         if (content.type !== "text") {
             return Response.json({error: "Unexpected response type" }, { status: 500 });
         }
-        const parsed = JSON.parse(content.text);
+        const rawText = content.text
+            .replace(/^```json\n?/, "")
+            .replace(/^```\n?/, "")
+            .replace(/\n?```$/, "")
+            .trim();
+
+        const parsed = JSON.parse(rawText);
 
         // return it to the browser
         return Response.json(parsed);
