@@ -21,15 +21,26 @@ const [isLoading, setIsLoading] = useState(false);
         <h1 className="text-2xl font-bold py-4 px-2">Add Task</h1>
         {/* Tabs */}
         <div className="flex gap-2 border-b border-gray-700">
-          <button onClick={() => setActiveTab("manual")
-            className={`px-4 py-2 text-sm font-medium cursor-pointer ${activeTab === "manual"
-              ? "border-b-2 border-blue-500 text-blue-500"
-              : "text-gray-400 hover:text-gray-200"
-            }`}>Manual</button>
-          <button onClick={() => setActiveTab("paste")className={`px-4 py-2 text-sm font-medium cursor-pointer ${activeTab === "paste"
-              ? "border-b-2 border-blue-500 text-blue-500"
-              : "text-gray-400 hover:text-gray-200"
-            }`}>Paste & Parse</button>
+          <button
+            onClick={() => setActiveTab("manual")}
+            className={`px-4 py-2 text-sm font-medium cursor-pointer ${
+              activeTab === "manual"
+                ? "border-b-2 border-blue-500 text-blue-500"
+                : "text-gray-400 hover:text-gray-200"
+            }`}
+          >
+            Manual
+          </button>
+          <button
+            onClick={() => setActiveTab("paste")}
+            className={`px-4 py-2 text-sm font-medium cursor-pointer ${
+              activeTab === "paste"
+                ? "border-b-2 border-blue-500 text-blue-500"
+                : "text-gray-400 hover:text-gray-200"
+            }`}
+          >
+            Paste & Parse
+          </button>
         </div>
 
         {/* Manual Task Form */}
