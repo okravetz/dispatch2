@@ -96,6 +96,12 @@ const [isLoading, setIsLoading] = useState(false);
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({ text: pasteText })
                 });
+                if (!response.ok) {
+                  const error = await response.json();
+                  console.error("API error:", error);
+                  setIsLoading(false);
+                  return;
+                }
                 const parsed = await response.json();
                 onAdd({
                   id: Date.now(),
