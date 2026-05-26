@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dispatch - Task Management Dashboard",
-  description: "Built by and for Oren Kravetz. A simple task management dashboard to help you stay organized and on top of your work.",
+  description:
+    "Built by and for Oren Kravetz. A simple task management dashboard to help you stay organized and on top of your work.",
 };
 
 export default function RootLayout({
